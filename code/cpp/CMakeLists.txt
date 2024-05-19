@@ -105,12 +105,23 @@ target_link_libraries(${MODULE_NAME}
 )
 
 #========= Python module (Just for Coding) =======#
-find_package (Python3  REQUIRED COMPONENTS Interpreter Development NumPy)
+find_package (Python3  REQUIRED COMPONENTS Interpreter Development)
 
 message("Python3_FOUND:${Python3_FOUND}")
 message("Python3_VERSION:${Python3_VERSION}")
 message("Python3_Development_FOUND:${Python3_Development_FOUND}")
 message("Python3_LIBRARIES:${Python3_LIBRARIES}")
+
+get_filename_component(Python3_BASE_DIR ${Python3_LIBRARIES} DIRECTORY)
+string(REPLACE "." ";" Python3_VERSION_LIST ${Python3_VERSION})
+list(GET Python3_VERSION_LIST 0 Python3_VERSION_MAJOR)
+list(GET Python3_VERSION_LIST 1 Python3_VERSION_MINOR)
+set(Python3_VERSION_SHORT "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}") 
+set(Python3_NumPy_INCLUDE_DIR ${Python3_BASE_DIR}/python${Python3_VERSION_SHORT}/site-packages/numpy/core/include)
+include_directories(${Python3_NumPy_INCLUDE_DIR})
+
+# Verify if NumPy was found
+find_package(Python3 COMPONENTS NumPy REQUIRED)
 message("Python3_NumPy_FOUND:${Python3_NumPy_FOUND}")
 message("Python3_NumPy_INCLUDE_DIRS:${Python3_NumPy_INCLUDE_DIR}")
 message("Python3_NumPy_VERSION:${Python3_NumPy_VERSION}")
