@@ -3,7 +3,8 @@ import projection_icosahedron as proj_ico
 import gnomonic_projection as gp
 import spherical_coordinates as sc
 
-from EigenSolvers import LinearSolver
+from instaOmniDepth.EigenSolvers import LinearSolver 
+# from EigenSolvers import LinearSolver
 from utility import metrics
 from utility import depthmap_utils
 import matplotlib
